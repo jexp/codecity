@@ -29,7 +29,8 @@ public class MooseWriter {
     private Collection<PackageInfo> extractPackages(Collection<PackageInfo> namespaces, int startIdx) {
         Collection<PackageInfo> result=new HashSet<PackageInfo>(namespaces.size());
         for (PackageInfo namespace : namespaces) {
-            PackageInfo packageInfo = new PackageInfoBean(namespace.getName(), startIdx++);
+            PackageInfo packageInfo = new
+                    PackageInfoBean(namespace.getName(), startIdx++);
             result.add(packageInfo);
             while (!packageInfo.isRoot()) {
                 final PackageInfo superPackage = new PackageInfoBean(packageInfo.getSuperPackage(), startIdx);
@@ -129,7 +130,7 @@ public class MooseWriter {
     }
 
     private String toMoose(String pkg) {
-        return pkg.replaceAll("/","::");
+        return pkg.replaceAll("\\.","::");
     }
 
     private void writeFooter(Writer os) throws IOException {
