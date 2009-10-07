@@ -1,1 +1,8 @@
+Java Parser using ASM, writing to mse format
+just ugly initial version
+
+Have Fun
+
+Michael
+
 Usage java org.codecity.MooseWriter test.mse
