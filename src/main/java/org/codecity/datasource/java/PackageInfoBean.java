@@ -37,16 +37,18 @@ public class PackageInfoBean implements PackageInfo {
         return name.hashCode();
     }
 
-    @Override
     public String getSuperPackage() {
         int idx=name.indexOf('.');
         if (idx==-1) return null;
         return name.substring(0,idx);
     }
 
-    @Override
     public boolean isRoot() {
         return name.indexOf('.')==-1;
+    }
+
+    public boolean isStub() {
+        return false;
     }
 
     @Override

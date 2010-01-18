@@ -1,6 +1,8 @@
 package org.codecity.datasource.java;
 
 import java.util.Collection;
+import java.util.EnumSet;
+import java.util.Set;
 
 public class ClassInspectUtils {
     public static String toSlashName(final Class<?> type) {
@@ -53,5 +55,12 @@ public class ClassInspectUtils {
 
     public static boolean isArrayType(final String typeName) {
         return typeName.endsWith("[]");
+    }
+
+
+    public static Modifiers getAccessControl(Set<Modifiers> modifiers) {
+        EnumSet<Modifiers> accessModifiers=EnumSet.of(Modifiers.PUBLIC, Modifiers.PROTECTED, Modifiers.PRIVATE);
+        accessModifiers.retainAll(modifiers);
+        return accessModifiers.isEmpty() ? Modifiers.PACKAGE : accessModifiers.iterator().next();
     }
 }

@@ -3,15 +3,16 @@ package org.codecity.datasource.java;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.io.Serializable;
+import java.util.Set;
 
 public class MethodInfoBean implements MethodInfo, Serializable {
     private final String name;
     private final Collection<String> params;
     private final String returnType;
-    private final int access;
+    private final Set<Modifiers> modifiers;
 
-    public MethodInfoBean(int access, String name, String returnType, final Collection<String> params) {
-        this.access = access;
+    public MethodInfoBean(Set<Modifiers> modifiers, String name, String returnType, final Collection<String> params) {
+        this.modifiers = modifiers;
         this.returnType = returnType;
         this.name = name;
         this.params = params;
@@ -25,8 +26,8 @@ public class MethodInfoBean implements MethodInfo, Serializable {
         return returnType;
     }
 
-    public int getAccess() {
-        return access;
+    public Set<Modifiers> getModifiers() {
+        return modifiers;
     }
 
     public Collection<String> getParams() {
@@ -34,7 +35,7 @@ public class MethodInfoBean implements MethodInfo, Serializable {
     }
 
     @Override public String toString() {
-        return Modifier.toString(access) + " " + getSignature() + "\n";
+        return modifiers.toString() + " " + getSignature() + "\n";
     }
 
     public String getSignature() {

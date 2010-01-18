@@ -22,4 +22,8 @@ public class RecordingInspector extends ClassInspector<ClassInfo> {
     protected RecursingClassVisitor<ClassInfo> createVisitor() {
         return new RecordingClassVisitor(this, infoFactory);
     }
+
+    public ClassFileLocator getClassFileLocator() {
+        return classFileLocator;
+    }
 }

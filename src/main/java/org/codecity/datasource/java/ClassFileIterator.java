@@ -65,6 +65,7 @@ public class ClassFileIterator {
     }
 
     public String getJarLocationFromClassPath(final String jarName, final String classPath) {
+	System.out.println("CP: "+classPath);
         final String[] entries = classPath.split(File.pathSeparator);
         for (String entry : entries) {
             if (entry.endsWith(jarName)) return entry;

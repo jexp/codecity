@@ -7,4 +7,6 @@ public interface PackageInfo {
     String getSuperPackage();
 
     boolean isRoot();
+
+    boolean isStub();
 }

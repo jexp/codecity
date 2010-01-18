@@ -1,10 +1,7 @@
 package org.codecity.datasource.java;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class ClassInfoBean implements ClassInfo, Serializable {
     private final String name;
@@ -13,6 +10,8 @@ public class ClassInfoBean implements ClassInfo, Serializable {
     private final Collection<ClassInfo> interfaces = new LinkedList<ClassInfo>();
     private Map<String, FieldInfo> fieldInfos = new HashMap<String, FieldInfo>(15);
     private int id;
+    private Set<Modifiers> modifiers;
+    private boolean stub;
 
     public ClassInfoBean(final String name) {
         if (name == null) throw new IllegalArgumentException("Name must not be null");
@@ -21,7 +20,7 @@ public class ClassInfoBean implements ClassInfo, Serializable {
 
     public ClassInfoBean(final String name, int id) {
         this(name);
-        this.id=id;
+        this.id = id;
     }
 
     public int getId() {
@@ -82,11 +81,13 @@ public class ClassInfoBean implements ClassInfo, Serializable {
         return fieldInfos;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder(name);
         if (superClass != null && !superClass.isRoot()) sb.append(" extends ").append(superClass);
         if (!interfaces.isEmpty())
             sb.append("implements ").append(interfaces);
+        if (!modifiers.isEmpty()) sb.append(" modifiers ").append(modifiers);
         return sb.toString();
     }
 
@@ -94,11 +95,36 @@ public class ClassInfoBean implements ClassInfo, Serializable {
         return name.equals("java.lang.Object");
     }
 
-    @Override
     public String getPackage() {
-        return name.substring(0,name.lastIndexOf("."));
+        return name.substring(0, name.lastIndexOf("."));
     }
+
     public String getSimpleName() {
-        return name.substring(name.lastIndexOf(".")+1);
+        return name.substring(name.lastIndexOf(".") + 1);
+    }
+
+    public boolean isInterface() {
+        return modifiers.contains(Modifiers.INTERFACE);
+    }
+
+    public boolean isAbstract() {
+        return modifiers.contains(Modifiers.ABSTRACT);
+    }
+
+    public void setModifiers(Set<Modifiers> modifiers) {
+        this.modifiers = modifiers;
+    }
+
+    public boolean isStub() {
+        return stub;
+    }
+
+    public void setIsStub() {
+        this.stub=true;
+    }
+    
+    public Set<Modifiers> getModifiers() {
+        return modifiers;
     }
 }
+

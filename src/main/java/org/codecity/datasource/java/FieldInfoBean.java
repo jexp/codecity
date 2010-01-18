@@ -2,20 +2,21 @@ package org.codecity.datasource.java;
 
 import java.lang.reflect.Modifier;
 import java.io.Serializable;
+import java.util.Set;
 
 public class FieldInfoBean implements FieldInfo, Serializable {
-    private final int access;
+    private final Set<Modifiers> modifiers;
     private final String name;
     private final String type;
 
-    public FieldInfoBean(final int access, final String name, final String type) {
-        this.access = access;
+    public FieldInfoBean(final Set<Modifiers> modifiers, final String name, final String type) {
+        this.modifiers = modifiers;
         this.name = name;
         this.type = type;
     }
 
-    public int getAccess() {
-        return access;
+    public Set<Modifiers> getModifiers() {
+        return modifiers;
     }
 
     public String getName() {
@@ -27,7 +28,7 @@ public class FieldInfoBean implements FieldInfo, Serializable {
     }
 
     @Override public String toString() {
-        return Modifier.toString(access)+" "+ getSignature()+"\n";
+        return modifiers.toString()+" "+ getSignature()+"\n";
     }
 
     public String getSignature() {

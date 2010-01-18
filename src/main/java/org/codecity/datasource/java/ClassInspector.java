@@ -27,6 +27,7 @@ public abstract class ClassInspector<R> {
             return classes.get(slashClassName);
         }
         ClassReader classReader = createClassReader(slashClassName);
+        if (classReader==null) return null;
         final RecursingClassVisitor<R> classVisitor = createVisitor();
         classReader.accept(classVisitor, 0);
         classes.put(slashClassName, classVisitor.get());
@@ -40,8 +41,10 @@ public abstract class ClassInspector<R> {
         URL classResource = classFileLocator.resolveClassName(slashClassName);
         try {
             return new ClassReader(classFileLocator.getStreamFromURL(classResource));
-        } catch (IOException e) {
-            throw new RuntimeException("Error creating ClassReader for class " + slashClassName);
+        } catch (Exception e) {
+            System.err.println("Error creating ClassReader for class " + slashClassName);
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 
@@ -49,4 +52,7 @@ public abstract class ClassInspector<R> {
         return classes;
     }
 
+    public boolean isStub(String name) {
+        return !classFileLocator.inScope(name);
+    }
 }
